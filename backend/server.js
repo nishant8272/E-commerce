@@ -1,12 +1,11 @@
 
 const express = require("express")
 require('dotenv').config();
+const connectDB = require("./db/connection")
 
 
-const jwt = require("jsonwebtoken");
 const cors = require('cors')
-const bcrypt = require('bcrypt');
-const User = require('./db/userschema')
+
 const app = express()
 app.use(express.urlencoded({ extended: true }));
 
@@ -24,6 +23,7 @@ app.post("/userregister", userregister)
 
 app.post("/adminregister", adminregister)
 
-app.listen(3000, () => {
+app.listen(3000, async() => {
     console.log("Server is running on port 3000")
+    await connectDB()
 })
