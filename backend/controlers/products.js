@@ -24,4 +24,15 @@ const products = async (req, res) => {
 
 }
 
-module.exports = products;
+
+const getProducts = async (req, res) => {
+    try {
+        const products = await productSchema.find();
+        res.json(products);
+        } catch (error) {
+            res.status(400).json({ message: error.message })
+            }
+            }
+
+
+module.exports = {products, getProducts};
