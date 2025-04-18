@@ -23,7 +23,7 @@ const userregister= async(req, res) => {
         password: hashedPassword
     })
     await newuser.save()
-    const token = jwt.sign({ email: email }, process.env.SECRET_KEY)
+    const token = jwt.sign({ email: email ,role:role }, process.env.SECRET_KEY)
     res.json({ message: "User created successfully" ,TOKEN: token})
 }
 

@@ -25,7 +25,7 @@ const adminregister = async (req, res) => {
     await newadmin.save()
 
 
-    const token = jwt.sign({ email: email }, process.env.SECRET_KEY)
+    const token = jwt.sign({ email: email,role:role }, process.env.SECRET_KEY)
     res.json({ message: "admin created successfully", TOKEN: token })
 }
 

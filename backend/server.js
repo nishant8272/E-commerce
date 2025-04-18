@@ -2,6 +2,7 @@
 const express = require("express")
 require('dotenv').config();
 const connectDB = require("./db/connection")
+const products = require("./controlers/products")
 
 
 const cors = require('cors')
@@ -22,6 +23,7 @@ const adminregister = require('./controlers/AdminController')
 app.post("/userregister", userregister)
 
 app.post("/adminregister", adminregister)
+app.post("/product",auth,products)
 
 app.listen(3000, async() => {
     console.log("Server is running on port 3000")
