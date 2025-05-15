@@ -1,4 +1,3 @@
-
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcrypt');
 const registervalidation = require('../middleware/validation');

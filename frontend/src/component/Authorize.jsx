@@ -1,24 +1,40 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Authorize = () => {
-  const [form, setForm] = useState({
-    name: '',
-    password: '',
-    gmail: '',
-  });
-
-  const handleChange = (e) => {
-    const { id, value } = e.target;
-    setForm((prev) => ({
-      ...prev,
-      [id]: value,
-    }));
-  };
-
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [role, setRole] = useState('user'); // Default role is user
+  let inputRole = useState(null)
+  if (role == 'admin') {
+    inputRole = "adminregister"
+  } else if (role == 'user') {
+    inputRole = "userregister"
+  }
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted:", form);
-    // Later: Send to backend or validate
+    try {
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/${inputRole}`, {
+        name,
+        email,
+        password,
+        role,
+      });
+      const { TOKEN } = response.data;
+      if (role == "admin") {
+        localStorage.setItem("seller", TOKEN);
+      } else if (role == "user") {
+        localStorage.setItem("user", TOKEN);
+      }
+      alert("Registration successful!");
+      navigate('/');
+    } catch (error) {
+      console.error('Registration failed:', error);
+      // Handle error appropriately
+    }
   };
 
   return (
@@ -35,22 +51,25 @@ const Authorize = () => {
               type="text"
               placeholder="Enter username"
               className="w-full border border-gray-300 rounded px-3 py-2 text-black"
-              value={form.name}
-              onChange={handleChange}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
             />
           </div>
 
           <div>
-            <label htmlFor="gmail" className="block font-medium text-black">Gmail</label>
+            <label htmlFor="gmail" className="block font-medium text-black">Email</label>
             <input
               id="gmail"
               type="email"
               placeholder="Enter Gmail address"
               className="w-full border border-gray-300 rounded px-3 py-2 text-black"
-              value={form.gmail}
-              onChange={handleChange}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
             />
           </div>
+
           <div>
             <label htmlFor="password" className="block text-black font-medium">Password</label>
             <input
@@ -58,18 +77,31 @@ const Authorize = () => {
               type="password"
               placeholder="Enter password"
               className="w-full border border-gray-300 rounded px-3 text-black py-2"
-              value={form.password}
-              onChange={handleChange}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
             />
           </div>
 
+          <div>
+            <label htmlFor="role" className="block text-black font-medium">Role</label>
+            <select
+              id="role"
+              className="w-full border border-gray-300 rounded px-3 py-2 text-black"
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+              required
+            >
+              <option value="user">User</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
 
           <button
             type="submit"
             className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded"
-            disabled={!form.name || !form.password || !form.gmail}
           >
-            Login
+            Create Account
           </button>
         </div>
       </div>
