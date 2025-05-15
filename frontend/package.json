@@ -13,6 +13,11 @@
     "@tailwindcss/vite": "^4.1.6",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+<<<<<<< Updated upstream
+=======
+    "react-hook-form": "^7.56.3",
+    "react-router-dom": "^7.6.0",
+>>>>>>> Stashed changes
     "tailwindcss": "^4.1.6"
   },
   "devDependencies": {
