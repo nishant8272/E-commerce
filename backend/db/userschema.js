@@ -7,6 +7,5 @@ const userSchema = new Schema({
     password: String
 });
 
-const User = mongoose.model('User', userSchema);
-
-module.exports = User;
+// Check if the model exists before compiling
+module.exports = mongoose.models.User || mongoose.model('User', userSchema);

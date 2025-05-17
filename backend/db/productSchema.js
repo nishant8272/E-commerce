@@ -8,7 +8,11 @@ const mongoose = require('mongoose');
             type:String,
             required:true
     },
-    model:{type:String,
+    category:{type:String,
+        required:true
+    },
+    stockQuantity:{
+        type:Number,
         required:true
     },
     description : {

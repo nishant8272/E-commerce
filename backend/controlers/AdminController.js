@@ -9,7 +9,10 @@ const adminregister = async (req, res) => {
     if (!name || !email || !password || role != "admin") {
         return res.status(400).json({ message: "Please fill in all fields." })
     }
-
+    const existingadmin = await admin.findOne({ email: email })
+    if (existingadmin) {
+        return res.status(400).json({ message: "admin already exists." })
+    }
     const parsed = registervalidation.safeParse(req.body);
     if (!parsed.success) {
         return res.status(400).json({ errors: parsed.error.errors });
@@ -28,4 +31,13 @@ const adminregister = async (req, res) => {
     res.json({ message: "admin created successfully", TOKEN: token })
 }
 
-module.exports = adminregister;
+const getadmin = async (req, res) => {
+    try {
+        const admin = await admin.find(req.body.email);
+        res.json(admin);
+    } catch (error) {
+        res.status(400).json({ message: error.message })
+    }
+}
+
+module.exports = { adminregister, getadmin};

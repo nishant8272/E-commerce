@@ -5,13 +5,15 @@ const products = async (req, res) => {
         if (req.body.role != "admin"){
             return res.status(401).json({ message: "you are not admin" });
         }
-        const { name, price, ImgUrl,model, description } = req.body;
+        const { name, price, ImgUrl,category,description,stockQuantity } = req.body;
         const product = new productSchema({
             name,
             price,
             ImgUrl,
-            model,
-            description
+            stockQuantity,
+            description,
+            category
+
         })
         await product.save();
         res.json({
@@ -34,5 +36,14 @@ const getProducts = async (req, res) => {
             }
             }
 
+const product = async (req, res) => {
+    try {
 
-module.exports = {products, getProducts};
+        const product = await productSchema.findById(req.body._id);
+        res.json(product);
+        } catch (error) {
+            res.status(400).json({ message: error.message })
+            }
+            }
+
+module.exports = {products, getProducts,product};
