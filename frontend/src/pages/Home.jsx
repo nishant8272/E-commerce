@@ -26,7 +26,7 @@ const Home = () => {
     <div className="min-h-screen bg-gray-100">
       {/* Navbar */}
       <nav className="bg-blue-600 text-white px-6 py-4 flex justify-between items-center">
-        <h1 className="text-xl font-bold">ShopEasy</h1>
+        <h1 className="text-xl font-bold">Krido</h1>
         <div className="space-x-4">
           <button className="hover:underline">Home</button>
           <button className="hover:underline">Cart</button>
@@ -36,7 +36,7 @@ const Home = () => {
 
       {/* Welcome Banner */}
       <div className="bg-blue-100 text-center py-8 text-black">
-        <h2 className="text-2xl font-semibold">Welcome to ShopEasy!</h2>
+        <h2 className="text-2xl font-semibold">Welcome to Karido!</h2>
         <p>Explore our amazing deals today</p>
       </div>
 
