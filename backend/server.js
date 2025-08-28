@@ -3,6 +3,7 @@ const express = require("express")
 require('dotenv').config();
 const connectDB = require("./db/connection")
 const cookieparser = require('cookie-parser')
+const paymentRouter = require("./controlers/razorpay");
 
 
 const auth = require('./middleware/auth')
@@ -41,6 +42,7 @@ app.post('/api/cart/add', auth, cartController.addToCart);
 app.delete('/api/cart/remove', auth, cartController.removeFromCart);
 app.put('/api/cart/update/:productId', auth, cartController.updateCartItem);
 app.get('/api/cart', auth, cartController.getCart);
+app.use("/razorpay", paymentRouter);
 app.listen(3000, async() => {
     console.log("Server is running on port 3000")
     await connectDB()
