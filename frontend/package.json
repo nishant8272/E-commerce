@@ -15,15 +15,8 @@
     "dotenv": "^16.5.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-=======
     "react-hook-form": "^7.56.3",
-    "react-router-dom": "^7.6.0",
->>>>>>> Stashed changes
-=======
-    "react-router-dom": "^7.6.0",
->>>>>>> main
+    "react-router-dom": "^7.8.2",
     "tailwindcss": "^4.1.6"
   },
   "devDependencies": {

@@ -9,11 +9,13 @@ const Authorize = () => {
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('user'); // Default role is user
   let inputRole = useState(null)
+  
   if (role == 'admin') {
     inputRole = "adminregister"
   } else if (role == 'user') {
     inputRole = "userregister"
   }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -39,8 +41,8 @@ const Authorize = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="flex flex-col items-center justify-center min-h-screen bg-cover bg-center bg-[url('https://img.freepik.com/free-photo/abstract-digital-grid-black-background_53876-97647.jpg?t=st=1744740262~exp=1744743862~hmac=13fb0761ea01245d87bd38399007373060c195c4fdcb041288f204bd3312b03e&w=900')]">
-        <h1 className="text-white text-2xl font-semibold mb-6">Welcome! We're grateful to have you</h1>
+      <div className="flex flex-col items-center justify-center min-h-screen bg-cover bg-center bg-gray-100">
+        <h1 className="text-black text-2xl font-semibold mb-6">KRIDOO..</h1>
         <div className="bg-white p-6 rounded-md shadow-md w-80 space-y-4">
           <h2 className="text-xl font-bold text-center text-black">Create Account</h2>
 
