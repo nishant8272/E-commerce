@@ -6,8 +6,38 @@ const { userAuth } = require('./auth/userAuth');
 const { Payment } = require('./db/payment');
 const { userModel } = require('./db/user');
 const { courseModel } = require('./db/courses');
-
+const {Order} =require("../db/Order")
 const razorRouter = express.Router();
+const { createClient } =require("redis");
+
+const publisher = createClient();
+publisher.on("error", (err) => console.error("Redis Client Error", err));
+await publisher.connect();
+
+async function InitiateOrder(orderId) {
+  try {
+    // 1. Find order in DB
+    const order = await Order.findOne({ orderId });
+    if (!order) throw new Error("Order not found");
+
+
+    // 3. Publish event to Redis
+    await publisher.publish(
+      "initiate",
+      JSON.stringify({
+        orderId: order.orderId,
+        userId: order.userId,
+        phone: order.phone,
+        status: order.status,
+      })
+    );
+    console.log(`📦 Order ${orderId} marked as packed & event published`);
+    return order;
+  } catch (err) {
+    console.error("❌ Failed to package order:", err);
+    throw err;
+  }
+}
 
 // Replace with your Razorpay credentials
 const razorpay = new Razorpay({
@@ -136,6 +166,17 @@ razorRouter.post('/verify-payment',userAuth, async (req, res) => {
             );
           }
         }
+         const userId=payment.user_id;
+         const orderId= parseInt(Math.random()*100000);
+         await Order.create({
+          orderId:orderId,
+          userId:userId,
+          phone:"8272012324",
+          status:"initialize"
+         })
+          
+         InitiateOrder(orderId)
+
 
         res.status(200).json({ 
           status: 'ok',

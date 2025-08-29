@@ -21,4 +21,5 @@ const mongoose = require('mongoose');
     }
 })
 
-module.exports= mongoose.model('Product',productSchema);
+const product= mongoose.model('Product',productSchema);
+module.exports ={product:product}
