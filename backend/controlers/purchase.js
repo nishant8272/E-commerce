@@ -1,10 +1,10 @@
 const { product } = require("../db/productSchema")
 const { Order } = require("../db/Order")
+const User = require("../db/userSchema.js");
 
-const User = require("../db/userschema")
 const { createClient } = require("redis");
 
-const publisher = createClient();
+const publisher = createClient({url:process.env.REDIS_URL});
 publisher.on("error", (err) => console.error("Redis Client Error", err));
 
 let isConnected = false;
@@ -16,9 +16,6 @@ async function connectPublisher() {
     console.log("✅ Redis publisher connected");
   }
 }
-
-
-
 
 async function InitiateOrder(orderId) {
   try {
@@ -46,9 +43,6 @@ async function InitiateOrder(orderId) {
   }
 }
 
-
-
-
 async function purchase(req, res) {
   const email = req.body.email;
   const id = req.body.id;
@@ -62,7 +56,7 @@ async function purchase(req, res) {
   await Order.create({
     orderId: orderId,
     userId: userId,
-    phone: "8272012324",
+    phone: "+918272012324",
     status: "initialize"
   })
 

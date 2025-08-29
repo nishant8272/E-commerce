@@ -5,18 +5,15 @@ const { createClient } = require("redis");
 
 
 // --- Redis Clients ---
-const publisher = createClient();
-const subscriber = createClient();
+const publisher = createClient({url:process.env.REDIS_URL});
+const subscriber = createClient({url:process.env.REDIS_URL});
 
 publisher.on("error", (err) => console.error("Redis Publisher Error", err));
 subscriber.on("error", (err) => console.error("Redis Subscriber Error", err));
 
 async function connectMongo() {
   try {
-    await mongoose.connect(process.env.MONGO||"mongodb+srv://nishantverma:batman%40123@cluster0.6qqws.mongodb.net/e-commercewebsite", {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await mongoose.connect(process.env.MONGO);
     console.log("✅ MongoDB connected");
   } catch (err) {
     console.error("❌ Failed to connect to MongoDB:", err);
